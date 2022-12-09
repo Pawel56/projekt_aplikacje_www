@@ -210,4 +210,4 @@ ENV/
 
 # mkdocs documentation
 /site
-/mysite/settings.py
+/komunikator/settings.py

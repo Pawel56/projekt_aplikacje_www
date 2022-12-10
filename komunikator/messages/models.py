@@ -9,4 +9,4 @@ class Message(models.Model):
     from_id = models.ForeignKey(User, default=None, on_delete=models.SET_DEFAULT, related_name='from_id')
     to_id = models.ForeignKey(User, default=None, on_delete=models.SET_DEFAULT, related_name='to_id')
     message = models.CharField(max_length=1000)
-    date_time = models.DateTimeField()
+    data_dodania = models.DateTimeField(auto_now_add=True)

@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Message
 from api.models import User
 
-class MessageSrializer(serializers.Serializer):
+class MessageSerializer(serializers.Serializer):
     from_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), allow_null=False)
     to_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), allow_null=False)
     message = serializers.CharField(required=True)

@@ -5,9 +5,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
 from .models import Message
-from api.models import User
 
-from .seralizers import MessageSrializer
+from .seralizers import MessageSerializer
 
 
 # Create your views here.
@@ -17,7 +16,7 @@ def message_list(request, pk):
     user = request.user
     if request.method == 'GET':
         messages = Message.objects.filter(Q(Q(from_id=user.id) & Q(to_id=pk)) | Q(Q(from_id=pk) & Q(to_id=user.id)))
-        serializer = MessageSrializer(messages, many=True)
+        serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data)
 
 @api_view(['PUT', 'DELETE'])
@@ -29,7 +28,7 @@ def message_update_delete(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'PUT':
-        serializer = MessageSrializer(message, data=request)
+        serializer = MessageSerializer(message, data=request)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

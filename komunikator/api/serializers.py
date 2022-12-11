@@ -15,3 +15,12 @@ class UserSerializer(serializers.ModelSerializer):
             instance.phone_no = validated_data.get('phone_no', instance.phone_no)
             instance.save()
             return instance
+
+class UserSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'first_name',
+            'last_name',
+        ]

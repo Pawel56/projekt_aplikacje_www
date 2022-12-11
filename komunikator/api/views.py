@@ -5,9 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
 from .models import User
-from komunikator.messages.models import Message
 from .serializers import UserSerializer, UserSearchSerializer
-from komunikator.messages.seralizers import MessageSerializer
 
 @api_view(['GET'])
 def user_list(request):
@@ -27,6 +25,3 @@ def user_search(request, name):
         serializer = UserSearchSerializer(users, many=True)
         return Response(serializer.data)
 
-#@api_view(['GET'])
-#def contacts_list(request):
-#    if request.method == 'GET':

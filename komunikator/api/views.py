@@ -1,13 +1,16 @@
+from django.contrib.auth.decorators import permission_required
 from django.db.models import Q
-from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from .models import User
 from .serializers import UserSerializer, UserSearchSerializer
 
 @api_view(['GET'])
+@permission_required('api.view_user')
+@permission_classes((IsAuthenticated,))
 def user_list(request):
     if request.method == 'GET':
         users = User.objects.all()
@@ -15,6 +18,8 @@ def user_list(request):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_required('api.view_user')
+@permission_classes((IsAuthenticated,))
 def user_detail(request, pk):
     user = request.user
     try:
@@ -27,6 +32,8 @@ def user_detail(request, pk):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_required('api.view_user')
+@permission_classes((IsAuthenticated,))
 def user_search(request, name):
     if request.method == 'GET':
         if name.__contains__(" "):

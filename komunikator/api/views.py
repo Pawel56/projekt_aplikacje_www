@@ -15,6 +15,18 @@ def user_list(request):
         return Response(serializer.data)
 
 @api_view(['GET'])
+def user_detail(request, pk):
+    user = request.user
+    try:
+        friend = User.objects.filter(pk=pk)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = UserSerializer(friend)
+        return Response(serializer.data)
+
+@api_view(['GET'])
 def user_search(request, name):
     if request.method == 'GET':
         if name.__contains__(" "):

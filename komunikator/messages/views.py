@@ -12,6 +12,7 @@ from .seralizers import MessageSerializer, FriendSerializer, MessageCreateSerial
 # Create your views here.
 
 @api_view(['GET'])
+@permission_required('messages.view_message')
 @permission_classes((IsAuthenticated,))
 def message_list(request, pk):
     user = request.user
@@ -21,6 +22,7 @@ def message_list(request, pk):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_required('messages.view_message')
 @permission_classes((IsAuthenticated,))
 def message_detail(request, pk):
     user = request.user
@@ -34,6 +36,7 @@ def message_detail(request, pk):
         return Response(serializer.data)
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_required('messages.view_message', 'messages.change_message', 'messages.delete_message')
 @permission_classes((IsAuthenticated,))
 def message_update_delete(request, pk):
     user = request.user
@@ -58,6 +61,7 @@ def message_update_delete(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
+@permission_required('messages.add_message')
 @permission_classes((IsAuthenticated,))
 def message_create(request):
     user = request.user
@@ -72,6 +76,7 @@ def message_create(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
+@permission_required('messages.view_friend')
 @permission_classes((IsAuthenticated,))
 def friend_detail(request, pk):
     try:
@@ -84,6 +89,7 @@ def friend_detail(request, pk):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_required('messages.view_friend')
 @permission_classes((IsAuthenticated,))
 def friend_list(request):
     user = request.user
@@ -93,6 +99,7 @@ def friend_list(request):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_required('messages.view_friend')
 @permission_classes((IsAuthenticated,))
 def friend_list_other(request, pk):
     if request.method == 'GET':
@@ -101,6 +108,7 @@ def friend_list_other(request, pk):
         return Response(serializer.data)
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_required('messages.view_friend', 'messages.change_friend', 'messages.delete_friend')
 @permission_classes((IsAuthenticated,))
 def friend_update_delete(request, pk):
     try:
@@ -128,6 +136,7 @@ def friend_update_delete(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
+@permission_required('messages.add_friend')
 @permission_classes((IsAuthenticated,))
 def friend_create(request):
     user = request.user
